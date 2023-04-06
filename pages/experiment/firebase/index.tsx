@@ -1,27 +1,13 @@
-import { getFirestore, getRef, getDoc, useData } from "@/lib/firestore"
+import { useData, useDocs } from "@/lib/firestore"
 import { useEffect, useState } from "react"
 
 export default function ExperimentFirebase() {
   const data = useData("todos", "J5wZ91clVmDUE7Nqfbwj");
-  const db = getFirestore()
-  const [unsubscribe, setUnsubscribe] = useState<any>([])
+  const [docs, isLoading] = useDocs("todos")
 
   useEffect(() => {
-    db.collection("todos").get().then(
-      query => {
-        const docs = query.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }))
-        setUnsubscribe(docs)
-      }
-    )
-    console.log("a")
-  }, [])
-
-  useEffect(() => {
-    console.log(`${JSON.stringify(unsubscribe)}`)
-  }, [unsubscribe])
+    console.log(`docs: ${JSON.stringify(docs)} ${isLoading}`)
+  }, [docs])
 
   useEffect(() => {
     console.log(`data: ${JSON.stringify(data)}`)
@@ -30,6 +16,7 @@ export default function ExperimentFirebase() {
   return (
     <>
       <div>firebase example</div>
+      {isLoading.current ? <div>Loading...</div> : <div>{JSON.stringify(docs)}</div>}
     </>
   )
 }
