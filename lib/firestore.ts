@@ -84,3 +84,18 @@ export const useCollection = (
 ) => {
   return db.collection(collectionName)
 }
+
+export const useDocsWithOnSnapshot = (
+  ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+) => {
+  const [docs, setDocs] = useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]>([])
+
+  useEffect(() => {
+    ref.onSnapshot(snapshot => {
+      setDocs(snapshot.docs)
+      console.log("onchange")
+    })
+  }, [])
+
+  return { docs }
+}
