@@ -11,6 +11,10 @@ const firebaseConfig = {
   appId: "1:1061901812373:web:9f2ba98b1c1b0bf7b0119c"
 };
 
+export type MyFirebaseRefOrQuery = firebase.firestore.CollectionReference<firebase.firestore.DocumentData> | firebase.firestore.Query<firebase.firestore.DocumentData>;
+
+export type MyFirebaseRef = firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;
+
 /**
  * firestoreへの接続を得る
  * 
@@ -63,7 +67,7 @@ export const useData = (
  * @returns documentの配列
  */
 export const useDocs = (
-  ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+  ref: MyFirebaseRefOrQuery
 ) => {
   const [docs, setDocs] = useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]>([])
   const isLoading = useRef(false);
@@ -103,7 +107,8 @@ export const useCollection = (
  * @returns {{docs: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]}} ドキュメントの配列
  */
 export const useDocsWithOnSnapshot = (
-  ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+  ref: MyFirebaseRefOrQuery
+
 ) => {
   const [docs, setDocs] = useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]>([])
 
@@ -122,7 +127,7 @@ export const useDocsWithOnSnapshot = (
  * @param data  追加するdocument
  */
 export const addData = (
-  ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
+  ref: MyFirebaseRef,
   data: any
 ) => {
   ref.add(data)
