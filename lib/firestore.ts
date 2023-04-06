@@ -115,3 +115,15 @@ export const useDocsWithOnSnapshot = (
 
   return { docs }
 }
+
+/**
+ * 渡されたcollectionにdocumentを追加する
+ * @param ref collectionへの参照
+ * @param data  追加するdocument
+ */
+export const addData = (
+  ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
+  data: any
+) => {
+  ref.add(data)
+}
