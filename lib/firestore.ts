@@ -61,7 +61,7 @@ export const useData = (
 export const useDocs = (
   collectionName: string,
 ) => {
-  const [docs, setDocs] = useState<any>([])
+  const [docs, setDocs] = useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]>([])
   const isLoading = useRef(false);
 
   useEffect(() => {
@@ -69,16 +69,12 @@ export const useDocs = (
       isLoading.current = true
       db.collection(collectionName).get().then(
         query => {
-          const _docs = query.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }))
-          setDocs(_docs)
+          setDocs(query.docs)
           isLoading.current = false
         }
       )
     }
   }, [])
 
-  return [docs, isLoading]
+  return { docs, isLoading }
 }
