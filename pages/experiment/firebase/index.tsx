@@ -1,29 +1,32 @@
-import firebase from "firebase/app";
-import "firebase/firestore"
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCta833k8W1TGbr9tGa60y-uOOpZihd4Zw",
-  authDomain: "seitamuro-blog3-experiment.firebaseapp.com",
-  projectId: "seitamuro-blog3-experiment",
-  storageBucket: "seitamuro-blog3-experiment.appspot.com",
-  messagingSenderId: "1061901812373",
-  appId: "1:1061901812373:web:9f2ba98b1c1b0bf7b0119c"
-};
+import { getFirestore, getRef, getDoc, useData } from "@/lib/firestore"
+import { useEffect, useState } from "react"
 
 export default function ExperimentFirebase() {
-  if (firebase.apps.length == 0) {
-    firebase.initializeApp(firebaseConfig);
-  }
+  const data = useData("todos", "J5wZ91clVmDUE7Nqfbwj");
+  const db = getFirestore()
+  const [unsubscribe, setUnsubscribe] = useState<any>([])
 
-  const db = firebase.firestore();
-  const todosRef = db.collection("todos");
-  todosRef.doc("J5wZ91clVmDUE7Nqfbwj").get().then(doc => {
-    if (doc.exists) {
-      console.log(doc.data());
-    } else {
-      console.log("empty");
-    }
-  })
+  useEffect(() => {
+    db.collection("todos").get().then(
+      query => {
+        const docs = query.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setUnsubscribe(docs)
+      }
+    )
+    console.log("a")
+  }, [])
+
+  useEffect(() => {
+    console.log(`${JSON.stringify(unsubscribe)}`)
+  }, [unsubscribe])
+
+  useEffect(() => {
+    console.log(`data: ${JSON.stringify(data)}`)
+  }, [data])
+
   return (
     <>
       <div>firebase example</div>
