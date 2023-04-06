@@ -110,7 +110,6 @@ export const useDocsWithOnSnapshot = (
   useEffect(() => {
     ref.onSnapshot(snapshot => {
       setDocs(snapshot.docs)
-      console.log("onchange")
     })
   }, [])
 
