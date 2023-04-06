@@ -132,3 +132,31 @@ export const addData = (
 ) => {
   ref.add(data)
 }
+
+/**
+ * 渡されたデータでドキュメントを上書きする
+ * 
+ * @param ref collectionへの参照
+ * @param documentId documentのID
+ * @param data 更新後の値
+ */
+export const updateData = (
+  ref: MyFirebaseRef,
+  documentId: string,
+  data: any
+) => {
+  ref.doc(documentId).set(data)
+}
+
+/**
+ * 指定されたdocumentIdのdocumentを削除する
+ * 
+ * @param ref collectionへの参照
+ * @param documentId ドキュメントID
+ */
+export const deleteData = async (
+  ref: MyFirebaseRef,
+  documentId: string,
+) => {
+  await ref.doc(documentId).delete()
+}

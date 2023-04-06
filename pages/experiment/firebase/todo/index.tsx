@@ -1,9 +1,38 @@
-import { useCollection, addData, useDocsWithOnSnapshot } from "@/lib/firestore"
-import { useEffect, useState, useRef } from "react"
+import { useCollection, addData, useDocsWithOnSnapshot, deleteData, updateData } from "@/lib/firestore"
+import { useEffect, useState, useRef, ChangeEvent } from "react"
 import firebase from "firebase/app"
 
 import { Task, TaskStatus } from "@/types/todo";
 import type { MyFirebaseRef } from "@/lib/firestore";
+
+/**
+ * タスクを削除する
+ * 
+ * @param ref collectionへの参照
+ * @param documentId 削除するdocumentのID
+ */
+const deleteTask = (
+  ref: MyFirebaseRef,
+  documentId: string,
+) => {
+  deleteData(ref, documentId)
+}
+
+/**
+ * タスクのステータスを変更する
+ * @param ref collectionへの参照
+ * @param documentId ドキュメントのID
+ * @param nextStatus 新しいステータス
+ */
+const changeTaskStatus = (
+  ref: MyFirebaseRef,
+  documentId: string,
+  nextStatus: TaskStatus,
+  task: Task
+) => {
+  task.status = nextStatus
+  updateData(ref, documentId, task);
+}
 
 /**
  * タスクを追加する。
@@ -23,29 +52,31 @@ const addTask = (
   addData(ref, task);
 }
 
-/**
- * 指定されたdocumentIdのタスクを削除する
- * 
- * @param ref collectionへの参照
- * @param documentId ドキュメントID
- */
-const deleteTask = async (
-  ref: MyFirebaseRef,
-  documentId: string,
+type IdAndTask = { id: string } & Task;
+
+type TaskStatusBarProps = {
+  status: TaskStatus
+  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void
+}
+
+const TaskStatusBar = (
+  { status, onChange = () => { } }: TaskStatusBarProps
 ) => {
-  await ref.doc(documentId).delete()
+  return <select value={status} onChange={onChange}>
+    {Object.values(TaskStatus).map(status => <option value={status} key={status}>{status}</option>)}
+  </select>
 }
 
 export default function ExperimentFirebase() {
   const todosRef = useCollection("todos");
-  const [todos, setTodos] = useState<any>([])
+  const [todos, setTodos] = useState<IdAndTask[]>([])
   const { docs: docsSnapshot } = useDocsWithOnSnapshot(todosRef.orderBy("timestamp"))
   const taskTitleRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const _todos = docsSnapshot.map(doc => ({
       id: doc.id,
-      ...doc.data()
+      ...doc.data() as Task
     }))
     setTodos(_todos)
   }, [docsSnapshot])
@@ -53,7 +84,10 @@ export default function ExperimentFirebase() {
   return (
     <>
       <div>firebase todo</div>
-      <div>{todos.map((todo: any) => (<div key={todo.id}>{todo.title}|{todo.status}<button onClick={() => deleteTask(todosRef, todo.id)}>delete</button></div>))}</div>
+      <div>{todos.map((todo: IdAndTask) => (<div key={todo.id}>{todo.title}|<TaskStatusBar status={todo.status} onChange={(event) => {
+        const status = event.target.value as TaskStatus;
+        changeTaskStatus(todosRef, todo.id, status, todo)
+      }} /><button onClick={() => deleteTask(todosRef, todo.id)}>delete</button></div>))}</div>
       <input ref={taskTitleRef}></input>
       <button onClick={() => addTask(todosRef, taskTitleRef.current!.value)}>Add</button>
     </>
