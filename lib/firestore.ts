@@ -11,6 +11,11 @@ const firebaseConfig = {
   appId: "1:1061901812373:web:9f2ba98b1c1b0bf7b0119c"
 };
 
+/**
+ * firestoreへの接続を得る
+ * 
+ * @returns firestoreへの接続
+ */
 export const getFirestore = () => {
   if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig)
@@ -19,23 +24,15 @@ export const getFirestore = () => {
   return firebase.firestore()
 }
 
-export const getRef = (
-  db: firebase.firestore.Firestore,
-  collectionName: string
-) => {
-  return db.collection(collectionName);
-}
-
-export const getDoc = async (
-  ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
-  docId: string
-) => {
-  const doc = await ref.doc(docId)
-  return doc
-}
-
 const db = getFirestore();
 
+/**
+ * documentのデータを取得する
+ * 
+ * @param collectionName コレクション名
+ * @param documentName ドキュメントID
+ * @returns ドキュメントの持つデータ
+ */
 export const useData = (
   collectionName: string,
   documentName: string
@@ -58,6 +55,13 @@ export const useData = (
   return data
 }
 
+/**
+ * collectionのもつdocumentを取得する
+ * データの更新を検知しない。
+ * 
+ * @param ref collectionへの参照
+ * @returns documentの配列
+ */
 export const useDocs = (
   ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
 ) => {
@@ -79,12 +83,25 @@ export const useDocs = (
   return { docs, isLoading }
 }
 
+/**
+ * collectionへの参照を取得する
+ * 
+ * @param collectionName collection名
+ * @returns collectionへの参照
+ */
 export const useCollection = (
   collectionName: string,
 ) => {
   return db.collection(collectionName)
 }
 
+/**
+ * collectionのdocumentを取得する。
+ * データの変更を検知する。
+ * 
+ * @param ref firebaseのcollectionへの参照
+ * @returns {{docs: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]}} ドキュメントの配列
+ */
 export const useDocsWithOnSnapshot = (
   ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
 ) => {
