@@ -6,19 +6,11 @@ import { setupFirebase } from "./firebase";
 setupFirebase()
 
 /**
- * 現在ログインしているユーザーのuidを取得する
+ * 現在ログインしているユーザーを返す
  * @returns ユーザーの情報
  */
 export const useUser = () => {
-  const [userId, setUserId] = useState<string>()
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setUserId(user.uid)
-      }
-    })
-  }, [])
+  const userId = firebase.auth().currentUser
 
   return { userId: userId }
 }
