@@ -1,19 +1,13 @@
 import firebase from "firebase/app";
 import "firebase/firestore"
 import { useState, useEffect, useRef } from "react"
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCta833k8W1TGbr9tGa60y-uOOpZihd4Zw",
-  authDomain: "seitamuro-blog3-experiment.firebaseapp.com",
-  projectId: "seitamuro-blog3-experiment",
-  storageBucket: "seitamuro-blog3-experiment.appspot.com",
-  messagingSenderId: "1061901812373",
-  appId: "1:1061901812373:web:9f2ba98b1c1b0bf7b0119c"
-};
+import { setupFirebase } from "./firebase";
 
 export type MyFirebaseRefOrQuery = firebase.firestore.CollectionReference<firebase.firestore.DocumentData> | firebase.firestore.Query<firebase.firestore.DocumentData>;
 
 export type MyFirebaseRef = firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;
+
+setupFirebase()
 
 /**
  * firestoreへの接続を得る
@@ -21,10 +15,6 @@ export type MyFirebaseRef = firebase.firestore.CollectionReference<firebase.fire
  * @returns firestoreへの接続
  */
 export const getFirestore = () => {
-  if (firebase.apps.length === 0) {
-    firebase.initializeApp(firebaseConfig)
-  }
-
   return firebase.firestore()
 }
 
