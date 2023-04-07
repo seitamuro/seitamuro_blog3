@@ -10,7 +10,20 @@ setupFirebase()
  * @returns ユーザーの情報
  */
 export const useUser = () => {
-  const userId = firebase.auth().currentUser
+  const [user, setUser] = useState<firebase.User>()
+  const unsubscribe = firebase.auth().onAuthStateChanged((_user) => {
+    if (_user) {
+      setUser(_user)
+      unsubscribe()
+    }
+  })
+  return { user: user }
+}
 
-  return { userId: userId }
+export const loginWithGoogleOAuth = () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth()
+    .signInWithPopup(provider)
+    .then((result) => { })
+    .catch(() => { })
 }
