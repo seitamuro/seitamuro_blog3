@@ -14,10 +14,12 @@ export const useUser = () => {
   const unsubscribe = firebase.auth().onAuthStateChanged((_user) => {
     if (_user) {
       setUser(_user)
-      unsubscribe()
+    } else {
+      setUser(undefined);
     }
+    console.log("changed!")
   })
-  return { user: user }
+  return { user: user, unsubscribe: unsubscribe }
 }
 
 export const loginWithGoogleOAuth = () => {
@@ -26,4 +28,11 @@ export const loginWithGoogleOAuth = () => {
     .signInWithPopup(provider)
     .then((result) => { })
     .catch(() => { })
+}
+
+/**
+ * サインアウトする
+ */
+export const signOut = async () => {
+  await firebase.auth().signOut();
 }

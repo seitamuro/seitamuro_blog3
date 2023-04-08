@@ -1,12 +1,11 @@
-import { useUser, loginWithGoogleOAuth } from "@/lib/auth"
-import { useEffect } from "react"
+import { useUser, loginWithGoogleOAuth, signOut } from "@/lib/auth"
 
 export default function ExperimentFirebase() {
   const { user } = useUser()
 
   return <div>
     <div>firebase bbs</div>
-    <button onClick={() => loginWithGoogleOAuth()}>ログイン</button>
+    {!user?.uid ? <button onClick={() => loginWithGoogleOAuth()}>ログイン</button> : <button onClick={() => signOut()}>ログアウト</button>}
     <div>{user?.uid ?? "未ログイン"}</div>
   </div>
 }
