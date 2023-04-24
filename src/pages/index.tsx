@@ -1,5 +1,17 @@
-import Head from 'next/head'
-import { Box, UnorderedList, ListItem, Link, VStack, Heading, Image, Text, Container, Divider, Center } from '@chakra-ui/react'
+import {
+  Box,
+  Center,
+  Container,
+  Divider,
+  Heading,
+  Image,
+  Link,
+  ListItem,
+  Text,
+  UnorderedList,
+  VStack,
+} from "@chakra-ui/react";
+import Head from "next/head";
 
 export default function Home() {
   return (
@@ -18,9 +30,7 @@ export default function Home() {
             <Heading as="h2" size="lg" mb={2}>
               About
             </Heading>
-            <Text>
-              このページではこれまでに作成したものや技術検証のために作成したものを展示しています。
-            </Text>
+            <Text>このページではこれまでに作成したものや技術検証のために作成したものを展示しています。</Text>
           </Box>
           <Divider />
           <Box>
@@ -29,7 +39,10 @@ export default function Home() {
             </Heading>
             <UnorderedList spacing={2}>
               <ListItem>
-                <Link href="https://chrome.google.com/webstore/detail/cliproach/icbaojdekddkoigpidooabchlgffedmf?hl=ja" isExternal>
+                <Link
+                  href="https://chrome.google.com/webstore/detail/cliproach/icbaojdekddkoigpidooabchlgffedmf?hl=ja"
+                  isExternal
+                >
                   ClipRoach
                 </Link>
               </ListItem>
@@ -61,5 +74,5 @@ export default function Home() {
         </VStack>
       </Container>
     </>
-  )
+  );
 }
