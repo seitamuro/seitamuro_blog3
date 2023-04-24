@@ -1,8 +1,8 @@
 import firebase from "firebase/app";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
-import type { MyFirebaseRef } from "@/src/lib/firestore";
-import { addData, deleteData, updateData, useCollection, useDocsWithOnSnapshot } from "@/src/lib/firestore";
+import type { MyFirebaseRef } from "@/lib/firestore";
+import { addData, deleteData, updateData, useCollection, useDocsWithOnSnapshot } from "@/lib/firestore";
 import { Task, TaskStatus } from "@/types/todo";
 
 /**
