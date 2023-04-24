@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix": "yarn lint --fix",
+    "prettier": "prettier -l \"./src/**/*.{js,jsx,ts,tsx,css,scss}\"",
+    "prettier:fix": "yarn prettier --write",
+    "formatter": "yarn lint && yarn prettier",
+    "formatter:fix": "yarn lint:fix && yarn prettier:fix"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.5.5",
