@@ -21,7 +21,7 @@ export default function Home() {
           Welcome to seitamuro blog!
           <Box>
             <Center>
-              <Image src="/seitamuro.svg" h="100" w="100" borderRadius="full" boxShadow="outline" />
+              <Image src="/seitamuro.svg" h="100" w="100" alt="seitamuro" borderRadius="full" boxShadow="outline" />
             </Center>
           </Box>
         </Heading>
