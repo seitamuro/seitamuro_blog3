@@ -14,11 +14,6 @@
     "formatter": "yarn lint && yarn format",
     "formatter:fix": "yarn lint:fix && yarn format:fix"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "dependencies": {
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
@@ -41,11 +36,11 @@
   },
   "devDependencies": {
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "husky": "^8.0.3",
+    "husky": "^8.0.0",
     "lint-staged": "^13.2.1"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": "yarn prettier",
+    "src/**/*.{js,jsx,ts,tsx}": "yarn format",
     "src/**/*.{js,jsx.ts,tsx,json,css,scss}": "yarn lint"
   }
 }

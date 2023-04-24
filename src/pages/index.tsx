@@ -1,3 +1,4 @@
+import Head from "next/head";
 import {
   Box,
   Center,
@@ -11,7 +12,8 @@ import {
   UnorderedList,
   VStack,
 } from "@chakra-ui/react";
-import Head from "next/head";
+
+
 
 export default function Home() {
   return (

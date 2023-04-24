@@ -1,6 +1,6 @@
+import { addData, useCollection, useDocsWithOnSnapshot } from "@/src/lib/firestore";
 import { useEffect, useState } from "react";
 
-import { addData, useCollection, useDocsWithOnSnapshot } from "@/src/lib/firestore";
 
 export default function ExperimentFirebase() {
   const todosRef = useCollection("todos");
