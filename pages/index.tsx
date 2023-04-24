@@ -1,31 +1,65 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import { Box, UnorderedList, ListItem, Link } from '@chakra-ui/react'
+import { Box, UnorderedList, ListItem, Link, VStack, Heading, Image, Text, Container, Divider, Center } from '@chakra-ui/react'
 
 export default function Home() {
   return (
     <>
-      <Box>
-        Welcome to seitamuro blog!
-      </Box>
-      <Box>
-        このページではこれまでに作成したものや技術検証のために作成したものを展示しています。
-      </Box>
-      <Box>
-        作ったもの
-        <UnorderedList>
-          <ListItem> <Link href="https://chrome.google.com/webstore/detail/cliproach/icbaojdekddkoigpidooabchlgffedmf?hl=ja">ClipRoach</Link> </ListItem>
-          <ListItem> <Link href="https://smore.vercel.app/">S&apos;more</Link></ListItem>
-        </UnorderedList>
-      </Box>
-      <Box>
-        Links
-        <UnorderedList>
-          <ListItem> <Link href="https://twitter.com/vimmerseita">Twitter</Link></ListItem>
-          <ListItem> <Link href="https://github.com/seitamuro">GitHub</Link></ListItem>
-        </UnorderedList>
-      </Box>
+      <Container maxW="container.md" py={10}>
+        <Heading as="h1" size="xl" textAlign="center" mb={6}>
+          Welcome to seitamuro blog!
+          <Box>
+            <Center>
+              <Image src="/seitamuro.svg" h="100" w="100" borderRadius="full" boxShadow="outline" />
+            </Center>
+          </Box>
+        </Heading>
+        <VStack spacing={6} align="start">
+          <Box>
+            <Heading as="h2" size="lg" mb={2}>
+              About
+            </Heading>
+            <Text>
+              このページではこれまでに作成したものや技術検証のために作成したものを展示しています。
+            </Text>
+          </Box>
+          <Divider />
+          <Box>
+            <Heading as="h2" size="lg" mb={2}>
+              作ったもの
+            </Heading>
+            <UnorderedList spacing={2}>
+              <ListItem>
+                <Link href="https://chrome.google.com/webstore/detail/cliproach/icbaojdekddkoigpidooabchlgffedmf?hl=ja" isExternal>
+                  ClipRoach
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link href="https://smore.vercel.app/" isExternal>
+                  S&apos;more
+                </Link>
+              </ListItem>
+            </UnorderedList>
+          </Box>
+          <Divider />
+          <Box>
+            <Heading as="h2" size="lg" mb={2}>
+              Links
+            </Heading>
+            <UnorderedList spacing={2}>
+              <ListItem>
+                <Link href="https://twitter.com/vimmerseita" isExternal>
+                  Twitter
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link href="https://github.com/seitamuro" isExternal>
+                  GitHub
+                </Link>
+              </ListItem>
+            </UnorderedList>
+          </Box>
+        </VStack>
+      </Container>
     </>
   )
 }
