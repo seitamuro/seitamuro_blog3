@@ -9,10 +9,10 @@
     "start": "next start",
     "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "yarn lint --fix",
-    "format": "prettier -l \"./src/**/*.{js,jsx,ts,tsx,css,scss}\"",
-    "format:fix": "yarn format --write",
-    "formatter": "yarn lint && yarn format",
-    "formatter:fix": "yarn lint:fix && yarn format:fix"
+    "prettier": "prettier -l \"./src/**/*.{js,jsx,ts,tsx,css,scss}\"",
+    "prettier:fix": "yarn prettier --write",
+    "format": "yarn lint && yarn prettier",
+    "format:fix": "yarn lint:fix && yarn prettier:fix"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.5.5",
@@ -40,6 +40,6 @@
     "lint-staged": "^13.2.1"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": "yarn formatter"
+    "src/**/*.{js,jsx,ts,tsx}": "yarn format"
   }
 }
