@@ -32,6 +32,9 @@ export default function Home() {
             </Heading>
             <Text>このページではこれまでに作成したものや技術検証のために作成したものを展示しています。</Text>
           </Box>
+          <Link href="/processing" color="blue.500">
+            =&gt; Processingの作品一覧へ
+          </Link>
           <Divider />
           <Box>
             <Heading as="h2" size="lg" mb={2}>
