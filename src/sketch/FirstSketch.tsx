@@ -18,13 +18,16 @@ export const FirstSketch = ({ width, height }: { width?: Number | string; height
 
   const setup = (p5: p5Types, canvasParentRef: Element) => {
     if (isNaN(w)) {
+      console.log("w is NaN");
       w = canvasParentRef.clientWidth;
     }
     if (isNaN(h)) {
+      console.log("h is NaN");
       h = canvasParentRef.clientHeight;
     }
+    console.log(`${w} ${h}`);
     p5.createCanvas(w, h).parent(canvasParentRef);
-    p5.colorMode(p5.HSB, p5.width, p5.height, 100);
+    p5.colorMode(p5.HSB, w, h, 100);
     p5.noStroke();
   };
 
@@ -35,7 +38,7 @@ export const FirstSketch = ({ width, height }: { width?: Number | string; height
     let whichBar = p5.mouseX / barWidth;
     if (whichBar !== lastBar) {
       let barX = whichBar * barWidth;
-      p5.fill(barX, p5.mouseY, 66);
+      p5.fill(barX, p5.mouseY, 80);
       p5.rect(barX, 0, barWidth, p5.height);
       lastBar = whichBar;
     }
