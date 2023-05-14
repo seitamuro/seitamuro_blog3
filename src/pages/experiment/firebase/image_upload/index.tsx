@@ -1,5 +1,6 @@
+import { Button, Image } from "@chakra-ui/react";
 import * as firebase from "firebase/app";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { useState } from "react";
 
 const firebaseConfig = {
@@ -17,6 +18,7 @@ const storageRef = ref(storage, "image/");
 
 const ImageUpload = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [image_url, setImageURL] = useState<string | null>(null);
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files[0]) {
@@ -27,6 +29,13 @@ const ImageUpload = () => {
   const onClickSubmit = () => {
     uploadBytes(storageRef, file!).then((snapshot) => {
       console.log("Upload a blob or file!");
+      console.log(snapshot);
+    });
+  };
+
+  const getImageURL = () => {
+    getDownloadURL(ref(storage, "image")).then((url) => {
+      setImageURL(url);
     });
   };
 
@@ -34,6 +43,8 @@ const ImageUpload = () => {
     <div className="App-form">
       <input name="file" type="file" accept="image/*" onChange={onChangeFile} />
       <input type="button" disabled={!file} value="Upload" onClick={onClickSubmit} />
+      <Button onClick={getImageURL}>Get Image URL</Button>
+      <Image src={image_url!} alt="" />
     </div>
   );
 };
